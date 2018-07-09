@@ -7,20 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5CF0C43A20F3948000E98CF2 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF0C43920F3948000E98CF2 /* Login.storyboard */; };
+		5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */; };
 		5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF689FD20EE6F53000602E5 /* AppDelegate.swift */; };
-		5CF68A0020EE6F53000602E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF689FF20EE6F53000602E5 /* ViewController.swift */; };
-		5CF68A0320EE6F53000602E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF68A0120EE6F53000602E5 /* Main.storyboard */; };
 		5CF68A0520EE6F56000602E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF68A0420EE6F56000602E5 /* Assets.xcassets */; };
-		5CF68A0820EE6F56000602E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF68A0620EE6F56000602E5 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5CF0C43920F3948000E98CF2 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5CF689FA20EE6F53000602E5 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF689FD20EE6F53000602E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CF689FF20EE6F53000602E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5CF68A0220EE6F53000602E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CF68A0420EE6F56000602E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5CF68A0720EE6F56000602E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CF68A0920EE6F56000602E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -35,6 +33,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CF0C43820F3941D00E98CF2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
+				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		5CF689F120EE6F53000602E5 = {
 			isa = PBXGroup;
 			children = (
@@ -54,11 +61,9 @@
 		5CF689FC20EE6F53000602E5 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				5CF0C43820F3941D00E98CF2 /* Login */,
 				5CF689FD20EE6F53000602E5 /* AppDelegate.swift */,
-				5CF689FF20EE6F53000602E5 /* ViewController.swift */,
-				5CF68A0120EE6F53000602E5 /* Main.storyboard */,
 				5CF68A0420EE6F56000602E5 /* Assets.xcassets */,
-				5CF68A0620EE6F56000602E5 /* LaunchScreen.storyboard */,
 				5CF68A0920EE6F56000602E5 /* Info.plist */,
 			);
 			path = TVShows;
@@ -122,9 +127,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CF68A0820EE6F56000602E5 /* LaunchScreen.storyboard in Resources */,
+				5CF0C43A20F3948000E98CF2 /* Login.storyboard in Resources */,
 				5CF68A0520EE6F56000602E5 /* Assets.xcassets in Resources */,
-				5CF68A0320EE6F53000602E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,31 +139,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CF68A0020EE6F53000602E5 /* ViewController.swift in Sources */,
+				5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */,
 				5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		5CF68A0120EE6F53000602E5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5CF68A0220EE6F53000602E5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5CF68A0620EE6F56000602E5 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5CF68A0720EE6F56000602E5 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5CF68A0A20EE6F56000602E5 /* Debug */ = {
