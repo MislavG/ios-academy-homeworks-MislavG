@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3zV-wb-1Ny">
-    <device id="retina4_0" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,40 +15,59 @@
             <objects>
                 <viewController id="3zV-wb-1Ny" customClass="LoginViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g9T-t1-UIQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdE-Y7-2cc">
-                                <rect key="frame" x="142" y="264" width="36" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="Tap"/>
+                                <rect key="frame" x="344" y="487" width="80" height="50"/>
+                                <color key="backgroundColor" red="0.56636845009170134" green="0.91728060233160624" blue="0.47167585123186284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="6qr-Lq-Gos"/>
+                                    <constraint firstAttribute="height" constant="50" id="bbW-oD-XPV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Tap">
+                                    <color key="titleColor" red="0.37160171958134613" green="0.45070347476894013" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="buttonTap:" destination="3zV-wb-1Ny" eventType="touchUpInside" id="ApP-h8-NfG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="764-D3-2Xo">
-                                <rect key="frame" x="150.5" y="354" width="19" height="36"/>
+                                <rect key="frame" x="374.5" y="587.5" width="19" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="1Tk-Zp-9Ih">
+                                <rect key="frame" x="365.5" y="409.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.62255709837371453" green="0.67403540513325733" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1Tk-Zp-9Ih" firstAttribute="centerX" secondItem="xdE-Y7-2cc" secondAttribute="centerX" id="97r-Vp-ZgX"/>
+                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerY" secondItem="g9T-t1-UIQ" secondAttribute="centerY" id="E27-fV-MRL"/>
+                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="top" secondItem="1Tk-Zp-9Ih" secondAttribute="bottom" constant="40.5" id="GLD-Pm-FX6"/>
+                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerX" secondItem="g9T-t1-UIQ" secondAttribute="centerX" id="O1i-ny-NXT"/>
                             <constraint firstItem="764-D3-2Xo" firstAttribute="centerX" secondItem="g9T-t1-UIQ" secondAttribute="centerX" id="b0o-Sy-9k9"/>
-                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerY" secondItem="g9T-t1-UIQ" secondAttribute="centerY" id="gJq-cE-bdM"/>
-                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerX" secondItem="g9T-t1-UIQ" secondAttribute="centerX" id="joN-Pt-UAA"/>
                             <constraint firstItem="764-D3-2Xo" firstAttribute="top" secondItem="xdE-Y7-2cc" secondAttribute="bottom" constant="50" id="oie-cj-aum"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rE9-Wh-j7D"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="1Tk-Zp-9Ih" id="i1o-jq-kgc"/>
                         <outlet property="numberOfTapsLabel" destination="764-D3-2Xo" id="ViG-55-KRS"/>
+                        <outlet property="tapButton" destination="xdE-Y7-2cc" id="0Pu-RX-S3D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dab-kc-6aJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="96.799999999999997" y="98.275862068965523"/>
+            <point key="canvasLocation" x="96.799999999999997" y="97.601199400299862"/>
         </scene>
     </scenes>
 </document>

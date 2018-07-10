@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        viewStart()
     }
     
     var numberOfTaps = 0
@@ -25,5 +26,25 @@ class LoginViewController: UIViewController {
         numberOfTaps+=1
         numberOfTapsLabel.text = String(numberOfTaps)
     }
-
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var tapButton: UIButton!
+    
+    func hideActivityIndicator()
+    {
+        activityIndicator.isHidden = true
+    }
+    
+    func viewStart() //on start, animate indicator for 3 seconds and activate button
+    {
+        activityIndicator.startAnimating()
+        tapButton.isEnabled = false
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
+            self.activityIndicator.stopAnimating()
+            self.tapButton.isEnabled = true
+        }
+    }
 }
