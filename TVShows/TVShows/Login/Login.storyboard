@@ -1,7 +1,54 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3zV-wb-1Ny">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="ATu-wB-Ubm">
+            <objects>
+                <viewController id="3zV-wb-1Ny" customClass="LoginViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="g9T-t1-UIQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdE-Y7-2cc">
+                                <rect key="frame" x="142" y="264" width="36" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Tap"/>
+                                <connections>
+                                    <action selector="buttonTap:" destination="3zV-wb-1Ny" eventType="touchUpInside" id="ApP-h8-NfG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="764-D3-2Xo">
+                                <rect key="frame" x="150.5" y="354" width="19" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="764-D3-2Xo" firstAttribute="centerX" secondItem="g9T-t1-UIQ" secondAttribute="centerX" id="b0o-Sy-9k9"/>
+                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerY" secondItem="g9T-t1-UIQ" secondAttribute="centerY" id="gJq-cE-bdM"/>
+                            <constraint firstItem="xdE-Y7-2cc" firstAttribute="centerX" secondItem="g9T-t1-UIQ" secondAttribute="centerX" id="joN-Pt-UAA"/>
+                            <constraint firstItem="764-D3-2Xo" firstAttribute="top" secondItem="xdE-Y7-2cc" secondAttribute="bottom" constant="50" id="oie-cj-aum"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rE9-Wh-j7D"/>
+                    </view>
+                    <connections>
+                        <outlet property="numberOfTapsLabel" destination="764-D3-2Xo" id="ViG-55-KRS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dab-kc-6aJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="96.799999999999997" y="98.275862068965523"/>
+        </scene>
+    </scenes>
 </document>
