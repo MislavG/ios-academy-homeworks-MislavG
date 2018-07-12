@@ -10,6 +10,16 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var numberOfTapsLabel: UILabel!
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var tapButton: UIButton!
+    
+    private var numberOfTaps = 0
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,27 +27,10 @@ class LoginViewController: UIViewController {
         viewStart()
     }
     
-    var numberOfTaps = 0
+    //ctrl 6
+    //MARK: -Private-
+    private func viewStart() { //on start, animate indicator for 3 seconds and activate button
     
-    @IBOutlet weak var numberOfTapsLabel: UILabel!
-    
-    @IBAction func buttonTap(_ sender: Any) {
-        
-        numberOfTaps+=1
-        numberOfTapsLabel.text = String(numberOfTaps)
-    }
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    @IBOutlet weak var tapButton: UIButton!
-    
-    func hideActivityIndicator()
-    {
-        activityIndicator.isHidden = true
-    }
-    
-    func viewStart() //on start, animate indicator for 3 seconds and activate button
-    {
         activityIndicator.startAnimating()
         tapButton.isEnabled = false
         
@@ -46,5 +39,17 @@ class LoginViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             self.tapButton.isEnabled = true
         }
+    }
+    
+    private func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+    }
+    
+    
+    
+    @IBAction func buttonTap(_ sender: Any) {
+        
+        numberOfTaps += 1
+        numberOfTapsLabel.text = String(numberOfTaps)
     }
 }
