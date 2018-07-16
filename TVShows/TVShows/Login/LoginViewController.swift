@@ -10,15 +10,28 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var numberOfTapsLabel: UILabel!
+    var checkBoxState = false
+    
+    
+    @IBOutlet weak var rememberMeCheckbox: UIButton!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var tapButton: UIButton!
+    @IBOutlet weak var logInButton: UIButton!
     
-    private var numberOfTaps = 0
     
-
+    
+    @IBAction func rememberMeCheckBoxPressed(_ sender: Any) {
+        if (checkBoxState == false) {
+            checkBoxState = true
+            rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        else if (checkBoxState == true){
+            checkBoxState = false
+            rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-empty")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,26 +43,19 @@ class LoginViewController: UIViewController {
     //ctrl 6
     //MARK: -Private-
     private func viewStart() { //on start, animate indicator for 3 seconds and activate button
+        
+        logInButton.layer.cornerRadius = 7
     
-        activityIndicator.startAnimating()
-        tapButton.isEnabled = false
+        //activityIndicator.startAnimating()
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
-            self.activityIndicator.stopAnimating()
-            self.tapButton.isEnabled = true
-        }
+        //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
+            //self.activityIndicator.stopAnimating()
+        //}
     }
     
     private func hideActivityIndicator() {
-        activityIndicator.isHidden = true
+        //activityIndicator.isHidden = true
     }
     
-    
-    
-    @IBAction func buttonTap(_ sender: Any) {
-        
-        numberOfTaps += 1
-        numberOfTapsLabel.text = String(numberOfTaps)
-    }
 }
