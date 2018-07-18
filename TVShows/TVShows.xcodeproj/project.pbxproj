@@ -12,6 +12,7 @@
 		5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */; };
 		5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF689FD20EE6F53000602E5 /* AppDelegate.swift */; };
 		5CF68A0520EE6F56000602E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF68A0420EE6F56000602E5 /* Assets.xcassets */; };
+		5CFD4C2B20FD380D009165AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFD4C2A20FD380D009165AF /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		5CF689FD20EE6F53000602E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF68A0420EE6F56000602E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CF68A0920EE6F56000602E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CFD4C2A20FD380D009165AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BE44D6DC5F31F21B7AC02F07 /* Pods_TVShows.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVShows.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE50ABFD70ACF0D472C2E06D /* Pods-TVShows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,6 +45,7 @@
 			children = (
 				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
 				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
+				5CFD4C2A20FD380D009165AF /* HomeViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			files = (
 				5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */,
 				5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */,
+				5CFD4C2B20FD380D009165AF /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

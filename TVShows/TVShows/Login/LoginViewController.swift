@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
 
     var checkBoxState = false
+    let homeStoryboard = UIStoryboard(name: "Login", bundle: nil)
     
     
     @IBOutlet weak var rememberMeCheckbox: UIButton!
@@ -45,7 +46,10 @@ class LoginViewController: UIViewController {
     private func viewStart() { //on start, animate indicator for 3 seconds and activate button
         
         logInButton.layer.cornerRadius = 7
+        
+        
     
+        
         //activityIndicator.startAnimating()
         
         
@@ -54,8 +58,16 @@ class LoginViewController: UIViewController {
         //}
     }
     
-    private func hideActivityIndicator() {
-        //activityIndicator.isHidden = true
+    @IBAction func logInOrCreateButtonPressed(_ sender: Any) {
+        let homeViewController = homeStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
+        
+        navigationController?.pushViewController(homeViewController, animated:
+            true)
     }
+    //    private func hideActivityIndicator() {
+//        activityIndicator.isHidden = true
+//    }
+    
+    
     
 }
