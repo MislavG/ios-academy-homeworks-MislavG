@@ -10,18 +10,18 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    
+    @IBOutlet weak var infoLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+}
 
-//    let storyboard = UIStoryboard(name: "Login", bundle: nil)
-//    // We need to instantiate the view controller that we want to go to
-//    let viewControllerD =
-//        storyboard.instantiateViewController(withIdentifier: "ViewController_D")
-//    // We need to push that view controller on top of the navigation stack
-//    navigationController?.pushViewController(viewControllerD, animated:
-//    true)
-
+extension LoginViewController: ShowUserDelegate {
+    func showUser(info: String) {
+        infoLabel.text = info
+    }
 }
