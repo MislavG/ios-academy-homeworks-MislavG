@@ -133,7 +133,7 @@
         <!--Home View Controller-->
         <scene sceneID="zdK-J5-MA8">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" id="cX8-Td-Fin" userLabel="Home View Controller" customClass="HomeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cX8-Td-Fin" userLabel="Home View Controller" customClass="HomeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9cU-IX-Tvv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

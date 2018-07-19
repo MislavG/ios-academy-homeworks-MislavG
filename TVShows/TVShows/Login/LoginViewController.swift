@@ -22,6 +22,7 @@ class LoginViewController: HomeViewController {
     var checkBoxState = false
     
     var user : User?
+    var loginUser : LoginData?
     
     
     
@@ -71,20 +72,27 @@ class LoginViewController: HomeViewController {
     
     @IBAction func createAccButtonPressed(_ sender: Any) {
         
-        //delegate?.showUser()
         
         _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
         
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
+        _loginUserWith(email: eMailTextField.text!, password: passwordTextField.text!)
+    }
+    
+    func OnLoginSuccess() {
+        
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
         let homeViewController = storyboard.instantiateViewController(
-            withIdentifier: "homeViewController"
+            withIdentifier: "HomeViewController"
             ) as! HomeViewController
         
-        delegate = (homeViewController.self as! ShowUserDelegate)
+//        delegate = (homeViewController.self as! ShowUserDelegate)
+//        delegate = self
+        
+        delegate?.showUser(info: (user?.email)!) //treba popravit
         
         navigationController?.pushViewController(homeViewController, animated:
             true)
@@ -117,6 +125,36 @@ class LoginViewController: HomeViewController {
                 case .failure(let error):
 //                    self?._infoLabel.text = "API failure: \(error)"
                     print("API failure: \(error)")
+                }
+        }
+    }
+    private func _loginUserWith(email: String, password: String) {
+        SVProgressHUD.show()
+        
+        let parameters: [String: String] = [
+            "email": email,
+            "password": password
+        ]
+        
+        Alamofire
+            .request("https://api.infinum.academy/api/users/sessions",
+                     method: .post,
+                     parameters: parameters,
+                     encoding: JSONEncoding.default)
+            .validate()
+            .responseJSON { [weak self] dataResponse in
+                
+                switch dataResponse.result {
+                case .success(let response):
+//                    self?._infoLabel.text = "Success: \(response)"
+                    self?.loginUser = response as? LoginData
+                    print("Success: \(response)")
+                    self?.OnLoginSuccess()
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                case .failure(let error):
+//                    self?._infoLabel.text = "API failure: \(error)"
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
     }
