@@ -80,12 +80,12 @@ class LoginViewController: HomeViewController {
         //}
     }
     
-    @IBAction func createAccButtonPressed(_ sender: Any) throws {
+    @IBAction func createAccButtonPressed(_ sender: Any) {
         
-        guard
-            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
-                throw MyError.runtimeError("Login fail")
-        }
+//        guard
+//            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
+//                throw MyError.runtimeError("Login fail")
+//        }
         _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
         
     }
@@ -94,7 +94,7 @@ class LoginViewController: HomeViewController {
         _loginUserWith(email: eMailTextField.text!, password: passwordTextField.text!)
     }
     
-    func OnLoginSuccess() {
+    func onLoginSuccess() {
         
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
@@ -104,6 +104,7 @@ class LoginViewController: HomeViewController {
         
         homeViewController.loadViewIfNeeded()
         homeViewController.loginUserHome = self.loginUser
+        homeViewController.loadShows(loginUserData: loginUser!)
         homeViewController.showUser(info: eMailTextField.text!)
 
         navigationController?.pushViewController(homeViewController, animated:
@@ -159,7 +160,7 @@ class LoginViewController: HomeViewController {
                 case .success(let response):
                     self?.loginUser = response
                     print("Success: \(response)")
-                    self?.OnLoginSuccess()
+                    self?.onLoginSuccess()
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
                     print("API failure: \(error)")
