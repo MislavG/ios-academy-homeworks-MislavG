@@ -15,6 +15,7 @@ protocol ShowUserDelegate: class {
     func showUser(info: String)
 }
 
+
 class LoginViewController: HomeViewController {
 
     weak var delegate: ShowUserDelegate?
@@ -23,6 +24,15 @@ class LoginViewController: HomeViewController {
     
     var user : User?
     var loginUser : LoginData?
+    
+    let alertController = UIAlertController(title: "Alert", message: "Alert: Login failed", preferredStyle: .alert)
+    
+    
+    
+    
+    enum MyError: Error {
+        case runtimeError(String)
+    }
     
     
     
@@ -70,9 +80,12 @@ class LoginViewController: HomeViewController {
         //}
     }
     
-    @IBAction func createAccButtonPressed(_ sender: Any) {
+    @IBAction func createAccButtonPressed(_ sender: Any) throws {
         
-        
+        guard
+            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
+                throw MyError.runtimeError("Login fail")
+        }
         _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
         
     }
@@ -89,11 +102,10 @@ class LoginViewController: HomeViewController {
             withIdentifier: "HomeViewController"
             ) as! HomeViewController
         
-//        delegate = (homeViewController.self as! ShowUserDelegate)
-//        delegate = self
-        
-        delegate?.showUser(info: (user?.email)!) //treba popravit
-        
+        homeViewController.loadViewIfNeeded()
+        homeViewController.loginUserHome = self.loginUser
+        homeViewController.showUser(info: eMailTextField.text!)
+
         navigationController?.pushViewController(homeViewController, animated:
             true)
     }
@@ -119,11 +131,9 @@ class LoginViewController: HomeViewController {
                 
                 switch dataResponse.result {
                 case .success(let userTemp):
-//                    self?._infoLabel.text = "Success: \(user)"
                     self?.user = userTemp
                     print("Success: \(userTemp)")
                 case .failure(let error):
-//                    self?._infoLabel.text = "API failure: \(error)"
                     print("API failure: \(error)")
                 }
         }
@@ -142,26 +152,20 @@ class LoginViewController: HomeViewController {
                      parameters: parameters,
                      encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { [weak self] dataResponse in
-                
+//            .responseJSON { [weak self] dataResponse in
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<LoginData>) in
+        
                 switch dataResponse.result {
                 case .success(let response):
-//                    self?._infoLabel.text = "Success: \(response)"
-                    self?.loginUser = response as? LoginData
+                    self?.loginUser = response
                     print("Success: \(response)")
                     self?.OnLoginSuccess()
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
-//                    self?._infoLabel.text = "API failure: \(error)"
                     print("API failure: \(error)")
+                    self?.present((self?.alertController)!, animated: true, completion: nil)
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
     }
-    //    private func hideActivityIndicator() {
-//        activityIndicator.isHidden = true
-//    }
-    
-    
-    
 }
