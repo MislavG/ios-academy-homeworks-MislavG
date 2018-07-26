@@ -102,12 +102,13 @@ class LoginViewController: HomeViewController {
             withIdentifier: "HomeViewController"
             ) as! HomeViewController
         
-        homeViewController.loadViewIfNeeded()
         homeViewController.loginUserHome = self.loginUser
         homeViewController.loadShows(loginUserData: loginUser!)
+        homeViewController.loadViewIfNeeded()
+        oadData()
         homeViewController.showUser(info: eMailTextField.text!)
 
-        navigationController?.pushViewController(homeViewController, animated:
+        navigationController?.setViewControllers([homeViewController], animated:
             true)
     }
     

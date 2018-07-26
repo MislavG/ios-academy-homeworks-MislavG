@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01389185BA6B7C8DE2507567 /* Pods_TVShows.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE44D6DC5F31F21B7AC02F07 /* Pods_TVShows.framework */; };
+		5C325D77210A22F000A44B8C /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */; };
 		5C35BF552107CA0400A19E4F /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35BF542107CA0300A19E4F /* Show.swift */; };
 		5C4994C120FFD88E00E20A3D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4994C020FFD88E00E20A3D /* User.swift */; };
 		5CF0C43A20F3948000E98CF2 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF0C43920F3948000E98CF2 /* Login.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		4D1322A6C864667C9C052AB3 /* Pods-TVShows.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.release.xcconfig"; sourceTree = "<group>"; };
+		5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		5C35BF542107CA0300A19E4F /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		5C4994C020FFD88E00E20A3D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5CF0C43920F3948000E98CF2 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
+				5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */,
 				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
 				5CFD4C2A20FD380D009165AF /* HomeViewController.swift */,
 				5C4994C020FFD88E00E20A3D /* User.swift */,
@@ -217,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C325D77210A22F000A44B8C /* HomeTableViewCell.swift in Sources */,
 				5C4994C120FFD88E00E20A3D /* User.swift in Sources */,
 				5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */,
 				5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */,
