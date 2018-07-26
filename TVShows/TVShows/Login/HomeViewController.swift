@@ -141,6 +141,11 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
     
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+//        println(tasks[indexPath.row])
+//        
+//    }
+    
 }
 
 extension HomeViewController: UITableViewDelegate {
