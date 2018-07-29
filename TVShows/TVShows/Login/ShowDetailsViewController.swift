@@ -17,14 +17,39 @@ class ShowDetailsViewController: UIViewController {
     var showID : String?
     
     private var showDetails : ShowDetails?
-    private var episodes : [Episode] = []
+    private var listOfEpisodes : [Episode] = []
     
     @IBOutlet private weak var showImageView: UIImageView!
-    @IBOutlet private weak var showNameLabel: UILabel!
+    @IBOutlet private weak var showTitleLabel: UILabel!
     @IBOutlet private weak var showDescriptionLabel: UILabel!
     @IBOutlet private weak var numberOfEpisodesLabel: UILabel!
     
-    @IBOutlet weak var episodesTableView: UITableView! {
+    @IBOutlet private weak var addNewButton: UIButton! {
+        didSet {
+            addNewButton.layer.shadowColor = UIColor.black.cgColor
+            addNewButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+            addNewButton.layer.masksToBounds = false
+            addNewButton.layer.shadowRadius = 2.0
+            addNewButton.layer.shadowOpacity = 0.5
+            addNewButton.layer.cornerRadius = addNewButton.frame.width / 2
+            addNewButton.addTarget(self, action: "backAction", for: .touchUpInside)
+        }
+    }
+    @IBOutlet private weak var backButton: UIButton!  {
+        didSet {
+            backButton.layer.shadowColor = UIColor.black.cgColor
+            backButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+            backButton.layer.masksToBounds = false
+            backButton.layer.shadowRadius = 2.0
+            backButton.layer.shadowOpacity = 0.5
+            backButton.layer.cornerRadius = backButton.frame.width / 2
+        }
+    }
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    @IBOutlet private weak var episodesTableView: UITableView! {
         didSet {
             episodesTableView.dataSource = self
             episodesTableView.delegate = self
@@ -34,6 +59,7 @@ class ShowDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         guard loginUserData != nil
             else {
                 print("loginUserData not defined")
@@ -44,12 +70,22 @@ class ShowDetailsViewController: UIViewController {
 
     }
  
-    func loadShowDetails(loginUserData: LoginData, showID : String) {
+    private func loadShowDetails(loginUserData: LoginData, showID : String) {
         _alamofireCodableGetShowDetails(loginUser: loginUserData, showID : showID)
     }
     
-    func loadEpisodes(loginUserData: LoginData, showID : String) {
+    private func loadEpisodes(loginUserData: LoginData, showID : String) {
         _alamofireCodableGetShowEpisodes(loginUser: loginUserData, showID : showID)
+    }
+    
+    private func updateView() {
+        showTitleLabel.text = showDetails?.title
+        showDescriptionLabel.text = showDetails?.title
+//        numberOfEpisodesLabel = showDetails.
+    }
+    
+    private func updateEpisodeNumber() {
+        numberOfEpisodesLabel.text = String(listOfEpisodes.count)
     }
     
     private func _alamofireCodableGetShowDetails(loginUser: LoginData, showID: String) {
@@ -71,6 +107,7 @@ class ShowDetailsViewController: UIViewController {
                 case .success(let userTemp):
                     self?.showDetails = userTemp
 //                    self?.tableView.reloadData()
+                    self?.updateView()
                     print("Success: \(userTemp)")
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -94,8 +131,9 @@ class ShowDetailsViewController: UIViewController {
                 
                 switch dataResponse.result {
                 case .success(let userTemp):
-                    self?.episodes = userTemp
-//                    self?.tableView.reloadData()
+                    self?.listOfEpisodes = userTemp
+                    self?.episodesTableView.reloadData()
+                    self?.updateEpisodeNumber()
                     print("Success: \(userTemp)")
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -106,7 +144,7 @@ class ShowDetailsViewController: UIViewController {
 }
 extension ShowDetailsViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in episodesTableView: UITableView) -> Int {
         /*
          
          We have one section for testing purpose
@@ -130,29 +168,30 @@ extension ShowDetailsViewController: UITableViewDataSource {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ episodesTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //number of rows
-        return listOfShows.count
+        return listOfEpisodes.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ episodesTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = indexPath.row
         //        let number = _numbers[row]
         
         
         // `UITableViewCell` - as you can see, we are reusing ...
-        let cell: HomeTableViewCell = tableView.dequeueReusableCell(
-            withIdentifier: "HomeTableViewCell",
+        let cell: DetailsTableViewCell = episodesTableView.dequeueReusableCell(
+            withIdentifier: "DetailsTableViewCell",
             for: indexPath
-            ) as! HomeTableViewCell
+            ) as! DetailsTableViewCell
         
         
         // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
-        let item: IndexPathCellItem = IndexPathCellItem(
+        let item: DetailsCellItem = DetailsCellItem(
             //            label: "INDEX PATH - ROW: \(row)",
-            cellTitleLabel: listOfShows[row].title,
-            cellColor: row % 2 == 0 ? .blue : .white
+            cellSeasonLabel: "S\(listOfEpisodes[row].season) Ep\(listOfEpisodes[row].episodeNumber)",
+            cellEpisodeLabel: listOfEpisodes[row].title,
+            cellColor: row % 2 == 0 ? .gray : .white
         )
         
         
@@ -164,22 +203,22 @@ extension ShowDetailsViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-        
-        let storyboard = UIStoryboard(name: "Login", bundle: nil)
-        
-        let showDetailsViewController = storyboard.instantiateViewController(
-            withIdentifier: "ShowDetailsViewController"
-            ) as! ShowDetailsViewController
-        
-        showDetailsViewController.loginUserData = self.loginUserHome
-        showDetailsViewController.showID = listOfShows[indexPath.row].id
-        showDetailsViewController.loadViewIfNeeded()
-        
-        navigationController?.setViewControllers([showDetailsViewController], animated:
-            true)
-        
-    }
+//    func tableView(episodesTableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+//
+//        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+//
+//        let showDetailsViewController = storyboard.instantiateViewController(
+//            withIdentifier: "ShowDetailsViewController"
+//            ) as! ShowDetailsViewController
+//
+//        showDetailsViewController.loginUserData = self.loginUserHome
+//        showDetailsViewController.showID = listOfShows[indexPath.row].id
+//        showDetailsViewController.loadViewIfNeeded()
+//
+//        navigationController?.setViewControllers([showDetailsViewController], animated:
+//            true)
+//
+//    }
     
 }
 

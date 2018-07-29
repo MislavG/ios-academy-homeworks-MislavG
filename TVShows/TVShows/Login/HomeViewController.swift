@@ -148,7 +148,8 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
@@ -160,8 +161,9 @@ extension HomeViewController: UITableViewDataSource {
         showDetailsViewController.showID = listOfShows[indexPath.row].id
         showDetailsViewController.loadViewIfNeeded()
         
-        navigationController?.setViewControllers([showDetailsViewController], animated:
+        navigationController?.pushViewController(showDetailsViewController, animated:
             true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         
     }
     
