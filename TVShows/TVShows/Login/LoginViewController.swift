@@ -16,7 +16,7 @@ protocol ShowUserDelegate: class {
 }
 
 
-class LoginViewController: HomeViewController {
+class LoginViewController: UIViewController {
 
     weak var delegate: ShowUserDelegate?
     
@@ -47,11 +47,11 @@ class LoginViewController: HomeViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBAction func rememberMeCheckBoxPressed(_ sender: Any) {
-        if (checkBoxState == false) {
+        if !checkBoxState {
             checkBoxState = true
             rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
-        else if (checkBoxState == true){
+        else if checkBoxState {
             checkBoxState = false
             rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-empty")?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
@@ -82,11 +82,12 @@ class LoginViewController: HomeViewController {
     
     @IBAction func createAccButtonPressed(_ sender: Any) {
         
-//        guard
-//            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
-//                throw MyError.runtimeError("Login fail")
-//        }
-        _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
+        guard
+            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
+                print("User registration fail")
+                return
+        }
+//        _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
         
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
@@ -103,10 +104,10 @@ class LoginViewController: HomeViewController {
             ) as! HomeViewController
         
         homeViewController.loginUserHome = self.loginUser
-        homeViewController.loadShows(loginUserData: loginUser!)
+//        homeViewController.loadShows(loginUserData: loginUser!)
         homeViewController.loadViewIfNeeded()
 
-        homeViewController.showUser(info: eMailTextField.text!)
+//        homeViewController.showUser(info: eMailTextField.text!) // dont delete
 
 //        navigationController?.pushViewController(homeViewController, animated:
 //            true)

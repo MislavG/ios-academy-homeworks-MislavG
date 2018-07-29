@@ -1,8 +1,8 @@
 //
-//  HomeViewController.swift
+//  ShowDetailsViewController.swift
 //  TVShows
 //
-//  Created by Infinum Student Academy on 16/07/2018.
+//  Created by Infinum Student Academy on 29/07/2018.
 //  Copyright © 2018 Infinum Student Academy MG. All rights reserved.
 //
 
@@ -11,84 +11,100 @@ import SVProgressHUD
 import Alamofire
 import CodableAlamofire
 
-class HomeViewController: UIViewController {
+class ShowDetailsViewController: UIViewController {
 
-    private var text: String?
-    var loginUserHome : LoginData?
+    var loginUserData : LoginData?
+    var showID : String?
     
-    private var show : Show?
-    private var listOfShows: [Show] = []
-
-//    private let _numbers = Array(1...1000)
+    private var showDetails : ShowDetails?
+    private var episodes : [Episode] = []
     
-    @IBOutlet weak var infoLabel: UILabel!
-        
-    @IBOutlet private weak var tableView: UITableView! {
+    @IBOutlet private weak var showImageView: UIImageView!
+    @IBOutlet private weak var showNameLabel: UILabel!
+    @IBOutlet private weak var showDescriptionLabel: UILabel!
+    @IBOutlet private weak var numberOfEpisodesLabel: UILabel!
+    
+    @IBOutlet weak var episodesTableView: UITableView! {
         didSet {
-            tableView.dataSource = self
-            tableView.delegate = self
+            episodesTableView.dataSource = self
+            episodesTableView.delegate = self
         }
     }
-    //        {
-//        didSet {
-//            infoLabel.text = text
-//        }
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Shows"
-        guard loginUserHome != nil
+
+        guard loginUserData != nil
             else {
-                print("loginUserHome not defined")
+                print("loginUserData not defined")
                 return
         }
-        loadShows(loginUserData: loginUserHome!)
+        loadShowDetails(loginUserData: loginUserData!, showID: showID!)
+        loadEpisodes(loginUserData: loginUserData!, showID: showID!)
+
+    }
+ 
+    func loadShowDetails(loginUserData: LoginData, showID : String) {
+        _alamofireCodableGetShowDetails(loginUser: loginUserData, showID : showID)
     }
     
-    func loadShows(loginUserData: LoginData) {
-        _alamofireCodableGetShows(loginUser: loginUserData)
+    func loadEpisodes(loginUserData: LoginData, showID : String) {
+        _alamofireCodableGetShowEpisodes(loginUser: loginUserData, showID : showID)
     }
     
-    private func _alamofireCodableGetShows(loginUser: LoginData) {
+    private func _alamofireCodableGetShowDetails(loginUser: LoginData, showID: String) {
         SVProgressHUD.show()
-        
-        
-//        let parameters: [String: String] = [
-//            "email": email,
-//            "password": password
-//        ]
-        
-        
+    
+
         let headers = ["Authorization": loginUser.token]
         Alamofire
-            .request("https://api.infinum.academy/api/shows",
+            .request("https://api.infinum.academy/api/shows/\(showID)",
                      method: .get,
                      encoding: JSONEncoding.default,
                      headers: headers)
             .validate()
-            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<[Show]>) in
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<ShowDetails>) in
                 
                 SVProgressHUD.dismiss()
                 
                 switch dataResponse.result {
                 case .success(let userTemp):
-                    self?.listOfShows = userTemp
-                    self?.tableView.reloadData()
+                    self?.showDetails = userTemp
+//                    self?.tableView.reloadData()
                     print("Success: \(userTemp)")
                 case .failure(let error):
                     print("API failure: \(error)")
                 }
         }
     }
-}
-
-extension HomeViewController: ShowUserDelegate {
-    func showUser(info: String) {
-        infoLabel.text = info
+    private func _alamofireCodableGetShowEpisodes(loginUser: LoginData, showID: String) {
+        SVProgressHUD.show()
+        
+        
+        let headers = ["Authorization": loginUser.token]
+        Alamofire
+            .request("https://api.infinum.academy/api/shows/\(showID)/episodes",
+                method: .get,
+                encoding: JSONEncoding.default,
+                headers: headers)
+            .validate()
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<[Episode]>) in
+                
+                SVProgressHUD.dismiss()
+                
+                switch dataResponse.result {
+                case .success(let userTemp):
+                    self?.episodes = userTemp
+//                    self?.tableView.reloadData()
+                    print("Success: \(userTemp)")
+                case .failure(let error):
+                    print("API failure: \(error)")
+                }
+        }
     }
+
 }
-extension HomeViewController: UITableViewDataSource {
+extension ShowDetailsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         /*
@@ -120,9 +136,9 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let row = indexPath.row
-//        let number = _numbers[row]
+        //        let number = _numbers[row]
         
         
         // `UITableViewCell` - as you can see, we are reusing ...
@@ -134,7 +150,7 @@ extension HomeViewController: UITableViewDataSource {
         
         // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
         let item: IndexPathCellItem = IndexPathCellItem(
-//            label: "INDEX PATH - ROW: \(row)",
+            //            label: "INDEX PATH - ROW: \(row)",
             cellTitleLabel: listOfShows[row].title,
             cellColor: row % 2 == 0 ? .blue : .white
         )
@@ -149,7 +165,7 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-
+        
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
         let showDetailsViewController = storyboard.instantiateViewController(
@@ -167,7 +183,7 @@ extension HomeViewController: UITableViewDataSource {
     
 }
 
-extension HomeViewController: UITableViewDelegate {
+extension ShowDetailsViewController: UITableViewDelegate {
     
     /*
      Now, we are using autosizing via autolayout, if you want custom size override this function.
