@@ -136,7 +136,7 @@ extension HomeViewController: UITableViewDataSource {
         let item: IndexPathCellItem = IndexPathCellItem(
 //            label: "INDEX PATH - ROW: \(row)",
             cellTitleLabel: listOfShows[row].title,
-            cellColor: row % 2 == 0 ? .blue : .white
+            cellColor: row % 2 == 0 ? .gray : .white
         )
         
         

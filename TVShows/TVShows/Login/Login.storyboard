@@ -230,13 +230,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="pUG-Vk-7nU">
                                         <rect key="frame" x="0.0" y="70" width="133.5" height="26.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Episodes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-W0-lwD" userLabel="Episodes Label">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Episodes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-W0-lwD" userLabel="Episodes Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="102.5" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGq-CV-qwe" userLabel="Number Of Episodes Label">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGq-CV-qwe" userLabel="Number Of Episodes Label">
                                                 <rect key="frame" x="109.5" y="0.0" width="24" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -305,6 +305,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="addButtonPressed:" destination="wT1-6I-p24" eventType="touchUpInside" id="uRF-sY-vKW"/>
                                     <action selector="addNewButton:" destination="BHf-b8-waU" eventType="touchUpInside" id="EVG-RD-UQs"/>
                                 </connections>
                             </button>
@@ -359,6 +360,78 @@
             </objects>
             <point key="canvasLocation" x="1845" y="630.63380281690138"/>
         </scene>
+        <!--Add Episode View Controller-->
+        <scene sceneID="y63-bC-8bd">
+            <objects>
+                <viewController storyboardIdentifier="AddEpisodeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U8S-qb-Yo9" customClass="AddEpisodeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3B6-2c-x05">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="wzP-7t-Gto">
+                                <rect key="frame" x="108" y="70" width="104" height="64.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-camera" translatesAutoresizingMaskIntoConstraints="NO" id="OBF-CG-NbS">
+                                        <rect key="frame" x="34.5" y="0.0" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="Nkc-Js-AFM"/>
+                                            <constraint firstAttribute="height" constant="35" id="aDr-xl-RNW"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE2-VZ-hrb" userLabel="Upload Photo Label">
+                                        <rect key="frame" x="0.0" y="44" width="104" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.43279630689999998" blue="0.68426967750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="zea-Sq-soO">
+                                <rect key="frame" x="10" y="204.5" width="300" height="159"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Episode title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6py-17-aZ7" userLabel="Episode Title TextView">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="21"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Season n." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d4Q-N8-98S" userLabel="Season Number TextView">
+                                        <rect key="frame" x="0.0" y="46" width="300" height="21"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Episode n." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cjq-bd-MWI" userLabel="Episode Number TextView">
+                                        <rect key="frame" x="0.0" y="92" width="300" height="21"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Episode description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PA9-kq-fTQ" userLabel="Episode Description TextView">
+                                        <rect key="frame" x="0.0" y="138" width="300" height="21"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zea-Sq-soO" firstAttribute="centerX" secondItem="3B6-2c-x05" secondAttribute="centerX" id="E0C-T9-aph"/>
+                            <constraint firstItem="wzP-7t-Gto" firstAttribute="top" secondItem="TyR-2s-JKE" secondAttribute="top" constant="50" id="KbC-zQ-0Ih"/>
+                            <constraint firstItem="zea-Sq-soO" firstAttribute="top" secondItem="wzP-7t-Gto" secondAttribute="bottom" constant="70" id="VhV-5n-c0X"/>
+                            <constraint firstItem="TyR-2s-JKE" firstAttribute="trailing" secondItem="zea-Sq-soO" secondAttribute="trailing" constant="10" id="eac-fF-zTo"/>
+                            <constraint firstItem="wzP-7t-Gto" firstAttribute="centerX" secondItem="3B6-2c-x05" secondAttribute="centerX" id="fFP-1T-DMz"/>
+                            <constraint firstItem="zea-Sq-soO" firstAttribute="leading" secondItem="TyR-2s-JKE" secondAttribute="leading" constant="10" id="ouw-Nr-tjQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TyR-2s-JKE"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="juq-ux-24o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2574.375" y="643.30985915492954"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mbd-GN-zL7">
             <objects>
@@ -377,6 +450,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic-camera" width="24" height="24"/>
         <image name="ic-checkbox-empty" width="24" height="24"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>

@@ -32,7 +32,7 @@ class ShowDetailsViewController: UIViewController {
             addNewButton.layer.shadowRadius = 2.0
             addNewButton.layer.shadowOpacity = 0.5
             addNewButton.layer.cornerRadius = addNewButton.frame.width / 2
-            addNewButton.addTarget(self, action: "backAction", for: .touchUpInside)
+//            addNewButton.addTarget(self, action: "backAction", for: .touchUpInside)
         }
     }
     @IBOutlet private weak var backButton: UIButton!  {
@@ -49,6 +49,21 @@ class ShowDetailsViewController: UIViewController {
     @IBAction func backButtonPressed(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func addButtonPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+    
+        
+        let addEpisodeViewController = storyboard.instantiateViewController(
+            withIdentifier: "AddEpisodeViewController"
+            ) as! AddEpisodeViewController
+        
+        let navigationController = UINavigationController.init(rootViewController:
+            addEpisodeViewController)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
     @IBOutlet private weak var episodesTableView: UITableView! {
         didSet {
             episodesTableView.dataSource = self
