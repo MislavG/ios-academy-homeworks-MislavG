@@ -427,6 +427,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TyR-2s-JKE"/>
                     </view>
+                    <connections>
+                        <outlet property="episodeDescription" destination="PA9-kq-fTQ" id="0z0-iO-BKV"/>
+                        <outlet property="episodeNumber" destination="cjq-bd-MWI" id="0Fl-Jd-xkJ"/>
+                        <outlet property="episodeSeason" destination="d4Q-N8-98S" id="K5i-ZZ-wPt"/>
+                        <outlet property="episodeTitle" destination="6py-17-aZ7" id="qaG-Bt-LNR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juq-ux-24o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

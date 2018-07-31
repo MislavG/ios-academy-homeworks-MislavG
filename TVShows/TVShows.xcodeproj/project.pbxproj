@@ -15,6 +15,7 @@
 		5C02F838210E1E060019F593 /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C02F837210E1E060019F593 /* DetailsTableViewCell.swift */; };
 		5C325D77210A22F000A44B8C /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */; };
 		5C35BF552107CA0400A19E4F /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35BF542107CA0300A19E4F /* Show.swift */; };
+		5C42E9D02110C893009E76F2 /* AddEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C42E9CF2110C893009E76F2 /* AddEpisode.swift */; };
 		5C4994C120FFD88E00E20A3D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4994C020FFD88E00E20A3D /* User.swift */; };
 		5CF0C43A20F3948000E98CF2 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF0C43920F3948000E98CF2 /* Login.storyboard */; };
 		5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */; };
@@ -32,6 +33,7 @@
 		5C02F837210E1E060019F593 /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
 		5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		5C35BF542107CA0300A19E4F /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
+		5C42E9CF2110C893009E76F2 /* AddEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEpisode.swift; sourceTree = "<group>"; };
 		5C4994C020FFD88E00E20A3D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5CF0C43920F3948000E98CF2 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -56,20 +58,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5CF0C43820F3941D00E98CF2 /* Login */ = {
+		5C42E9CE2110C850009E76F2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
-				5C00C252210F60650008A718 /* AddEpisodeViewController.swift */,
 				5C325D76210A22F000A44B8C /* HomeTableViewCell.swift */,
+				5C42E9CF2110C893009E76F2 /* AddEpisode.swift */,
 				5C02F837210E1E060019F593 /* DetailsTableViewCell.swift */,
-				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
-				5CFD4C2A20FD380D009165AF /* HomeViewController.swift */,
-				5C02F831210E04F20019F593 /* ShowDetailsViewController.swift */,
 				5C02F835210E13E70019F593 /* Episode.swift */,
 				5C02F833210E0EA40019F593 /* ShowDetails.swift */,
 				5C4994C020FFD88E00E20A3D /* User.swift */,
 				5C35BF542107CA0300A19E4F /* Show.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5CF0C43820F3941D00E98CF2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5C42E9CE2110C850009E76F2 /* Models */,
+				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
+				5C00C252210F60650008A718 /* AddEpisodeViewController.swift */,
+				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
+				5CFD4C2A20FD380D009165AF /* HomeViewController.swift */,
+				5C02F831210E04F20019F593 /* ShowDetailsViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -240,6 +251,7 @@
 				5C4994C120FFD88E00E20A3D /* User.swift in Sources */,
 				5CF0C43C20F394B400E98CF2 /* LoginViewController.swift in Sources */,
 				5C02F834210E0EA40019F593 /* ShowDetails.swift in Sources */,
+				5C42E9D02110C893009E76F2 /* AddEpisode.swift in Sources */,
 				5CF689FE20EE6F53000602E5 /* AppDelegate.swift in Sources */,
 				5C35BF552107CA0400A19E4F /* Show.swift in Sources */,
 				5C02F838210E1E060019F593 /* DetailsTableViewCell.swift in Sources */,

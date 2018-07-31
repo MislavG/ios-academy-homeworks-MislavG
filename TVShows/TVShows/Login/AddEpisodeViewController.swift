@@ -7,11 +7,37 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
+import CodableAlamofire
+
+protocol RefreshEpisodeListDelegate: class {
+    func refreshEpisodeList()
+}
 
 class AddEpisodeViewController: UIViewController {
 
+    weak var delegate: RefreshEpisodeListDelegate?
+    
+    var loginUserData : LoginData?
+    
+    var addEpisodeModel : AddEpisode?
+    
+    let alertController = UIAlertController(title: "Alert", message: "Alert: Episode not created.", preferredStyle: .alert)
+    
+    @IBOutlet private weak var episodeTitle: UITextField!
+    @IBOutlet private weak var episodeSeason: UITextField!
+    @IBOutlet private weak var episodeNumber: UITextField!
+    @IBOutlet private weak var episodeDescription: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard loginUserData != nil
+            else {
+                print("loginUserData not defined")
+                return
+        }
 
         self.title = "Add episode"
         
@@ -29,10 +55,63 @@ class AddEpisodeViewController: UIViewController {
     }
 
     @objc func didSelectCancel () {
-        
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func didSelectAdd () {
+        addEpisodeModel = AddEpisode.init(showId: nil, mediaId: nil, title: episodeTitle.text!, description: episodeDescription.text!, episodeNumber: episodeNumber.text!, season: episodeSeason.text!)
+    
+        _alamofireCodableCreateNewEpisode(loginUser: loginUserData!, addEpisode: addEpisodeModel!)
+    }
+    
+    private func onSuccess() {
+        navigationController?.popViewController(animated: true)
+        delegate?.refreshEpisodeList()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func onFail() {
+        self.present((self.alertController), animated: true, completion: nil)
+    }
+    
+    private func _alamofireCodableCreateNewEpisode(loginUser: LoginData, addEpisode: AddEpisode) {
+        SVProgressHUD.show()
         
+                let parameters: [String: String] = [
+                    "showId": "KnhNCJGvczXiGLIC"/*addEpisode.showId!*/,
+                    "mediaId": "KnhNCJGvczLiGDIC"/*addEpisode.mediaId!*/,
+                    "title": addEpisode.title,
+                    "description": addEpisode.description,
+                    "episodeNumber": addEpisode.episodeNumber,
+                    "season": addEpisode.season
+                ]
+        
+        let headers = ["Authorization": loginUser.token]
+        Alamofire
+            .request("https://api.infinum.academy/api/episodes",
+                method: .post,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers)
+            .validate()
+            .responseJSON { [weak self] dataResponse in
+                
+//            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<Any>) in
+        
+                SVProgressHUD.dismiss()
+                
+                switch dataResponse.result {
+                case .success(let userTemp):
+//                    self?.showDetails = userTemp
+                    self?.onSuccess()
+                    //                    self?.tableView.reloadData()
+//                    self?.updateView()
+                    print("Success: \(userTemp)")
+                case .failure(let error):
+                    self?.onFail()
+                    print("API failure: \(error)")
+                }
+        }
     }
 }

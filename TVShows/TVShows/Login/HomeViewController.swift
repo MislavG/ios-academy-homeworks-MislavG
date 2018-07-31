@@ -54,10 +54,7 @@ class HomeViewController: UIViewController {
         SVProgressHUD.show()
         
         
-//        let parameters: [String: String] = [
-//            "email": email,
-//            "password": password
-//        ]
+
         
         
         let headers = ["Authorization": loginUser.token]

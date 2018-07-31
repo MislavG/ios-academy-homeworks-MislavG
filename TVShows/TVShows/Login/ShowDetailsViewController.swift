@@ -58,8 +58,15 @@ class ShowDetailsViewController: UIViewController {
             withIdentifier: "AddEpisodeViewController"
             ) as! AddEpisodeViewController
         
+        
+        addEpisodeViewController.loginUserData = self.loginUserData
+        
         let navigationController = UINavigationController.init(rootViewController:
             addEpisodeViewController)
+        
+        addEpisodeViewController.loadViewIfNeeded()
+        
+        addEpisodeViewController.delegate = self
         
         present(navigationController, animated: true, completion: nil)
     }
@@ -246,4 +253,12 @@ extension ShowDetailsViewController: UITableViewDelegate {
     //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     //        return 90
     //    }
+}
+
+extension ShowDetailsViewController: RefreshEpisodeListDelegate {
+    func refreshEpisodeList() {
+        
+        loadEpisodes(loginUserData: loginUserData!, showID: showID!)
+        self.episodesTableView.reloadData()
+    }
 }
