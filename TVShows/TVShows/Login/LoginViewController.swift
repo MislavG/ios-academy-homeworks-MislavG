@@ -96,9 +96,18 @@ class LoginViewController: UIViewController {
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
-        guard (eMailTextField.text! != "" || passwordTextField.text! != "")
+        guard (eMailTextField.text! != "")
             else {
-                print("Username or password is empty")
+                eMailTextField.shake()
+                eMailTextField.animateColorChangeAdvanced()
+                print("Username is empty")
+                return
+        }
+        guard (passwordTextField.text! != "")
+            else {
+                passwordTextField.shake()
+                passwordTextField.animateColorChangeAdvanced()
+                print("Password is empty")
                 return
         }
         
@@ -183,4 +192,23 @@ class LoginViewController: UIViewController {
                 }
         }
     }
+}
+
+extension UIView {
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.duration = 0.6
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
+        layer.add(animation, forKey: "shake")
+    }
+    
+    func animateColorChangeAdvanced() {
+        UIView.animate(
+            withDuration: 0.5, delay: 0.0, options:[.autoreverse, .curveEaseInOut], animations: {
+                self.backgroundColor = UIColor.red.withAlphaComponent(0.1)
+        }, completion: {(finished) in
+            self.backgroundColor = UIColor.white.withAlphaComponent(1)})
+    }
+        
 }
