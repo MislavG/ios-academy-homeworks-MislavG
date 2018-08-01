@@ -25,6 +25,10 @@ class AddEpisodeViewController: UIViewController {
     
     let alertController = UIAlertController(title: "Alert", message: "Alert: Episode not created.", preferredStyle: .alert)
     
+    let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+        print("You've pressed cancel");
+    }
+    
     @IBOutlet private weak var episodeTitle: UITextField!
     @IBOutlet private weak var episodeSeason: UITextField!
     @IBOutlet private weak var episodeNumber: UITextField!
@@ -32,6 +36,8 @@ class AddEpisodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.alertController.addAction(self.action2)
         
         guard loginUserData != nil
             else {

@@ -49,6 +49,7 @@ class ShowDetailsViewController: UIViewController {
     
     @IBAction func backButtonPressed(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {

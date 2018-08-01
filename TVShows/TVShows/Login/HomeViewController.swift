@@ -35,6 +35,26 @@ class HomeViewController: UIViewController {
 //            infoLabel.text = text
 //        }
 //    }
+//    let logoutItem = UIBarButtonItem.init(image: UIImage(named:
+//        "ic-logout"),
+//                                          style: .plain,
+//                                          target: self,
+//                                          action:
+//        #selector(_logoutActionHandler))
+    
+    @objc private func _logoutActionHandler() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let loginViewController = storyboard.instantiateViewController(
+            withIdentifier: "LoginViewController"
+            ) as! LoginViewController
+        
+        UserDefaults.standard.removeObject(forKey: "loginInfo")
+        
+        navigationController?.setViewControllers([loginViewController],
+                                                 animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +64,20 @@ class HomeViewController: UIViewController {
                 print("loginUserHome not defined")
                 return
         }
+//        navigationItem.leftBarButtonItem = logoutItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic-logout"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action:
+            #selector(_logoutActionHandler))
+        
         loadShows(loginUserData: loginUserHome!)
     }
+
+//    @objc func didSelectLogout () {
+//        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
+//    }
 //    private func setImages(shows: [Show]) {
 //        for show in shows {
 //            let url = URL(string: "https://api.infinum.academy" + show.imageUrl)

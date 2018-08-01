@@ -30,7 +30,8 @@ class LoginViewController: UIViewController {
         print("You've pressed cancel");
     }
 
-    
+    let defaults = UserDefaults.standard
+    let loginInfoKey = "loginInfo"
     
     
     
@@ -54,6 +55,7 @@ class LoginViewController: UIViewController {
         if !checkBoxState {
             checkBoxState = true
             rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            
         }
         else if checkBoxState {
             checkBoxState = false
@@ -77,6 +79,18 @@ class LoginViewController: UIViewController {
         logInButton.layer.cornerRadius = 7
         
         self.alertController.addAction(self.action2)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        //check if user has stored credentials
+        if (defaults.object(forKey: loginInfoKey) != nil) {
+            let loginInfo: [String] = defaults.object(forKey: loginInfoKey) as! [String]
+            _loginUserWith(email: loginInfo[0], password: loginInfo[1])
+            
+            checkBoxState = true
+            rememberMeCheckBoxPressed(self)
+        }
+        
+        
         //activityIndicator.startAnimating()
         
         //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
@@ -91,8 +105,6 @@ class LoginViewController: UIViewController {
                     print("User registration fail")
                 return
         }
-//        _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
-        
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
@@ -116,6 +128,11 @@ class LoginViewController: UIViewController {
     
     func onLoginSuccess() {
         
+        //store in user defaults
+        if checkBoxState {
+            defaults.set([eMailTextField.text, passwordTextField.text], forKey: loginInfoKey)
+        }
+        
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
         let homeViewController = storyboard.instantiateViewController(
@@ -123,13 +140,11 @@ class LoginViewController: UIViewController {
             ) as! HomeViewController
         
         homeViewController.loginUserHome = self.loginUser
-//        homeViewController.loadShows(loginUserData: loginUser!)
+
         homeViewController.loadViewIfNeeded()
 
-//        homeViewController.showUser(info: eMailTextField.text!) // dont delete
 
-//        navigationController?.pushViewController(homeViewController, animated:
-//            true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setViewControllers([homeViewController], animated:
             true)
     }
