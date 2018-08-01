@@ -26,6 +26,10 @@ class LoginViewController: UIViewController {
     var loginUser : LoginData?
     
     let alertController = UIAlertController(title: "Alert", message: "Alert: Login failed", preferredStyle: .alert)
+    let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+        print("You've pressed cancel");
+    }
+
     
     
     
@@ -72,7 +76,7 @@ class LoginViewController: UIViewController {
         
         logInButton.layer.cornerRadius = 7
         
-        
+        self.alertController.addAction(self.action2)
         //activityIndicator.startAnimating()
         
         //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
@@ -84,7 +88,7 @@ class LoginViewController: UIViewController {
         
         guard
             _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
-                print("User registration fail")
+                    print("User registration fail")
                 return
         }
 //        _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
@@ -92,6 +96,12 @@ class LoginViewController: UIViewController {
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
+        guard (eMailTextField.text! != "" || passwordTextField.text! != "")
+            else {
+                print("Username or password is empty")
+                return
+        }
+        
         _loginUserWith(email: eMailTextField.text!, password: passwordTextField.text!)
     }
     
@@ -168,8 +178,8 @@ class LoginViewController: UIViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self?.present((self?.alertController)!, animated: true, completion: nil)
-                    SVProgressHUD.showError(withStatus: "Failure")
+                    self?.present((self?.alertController)!, animated: true, completion: nil )
+//                    SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
     }

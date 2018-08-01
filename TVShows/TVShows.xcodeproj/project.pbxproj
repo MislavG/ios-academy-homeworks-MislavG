@@ -75,12 +75,12 @@
 		5CF0C43820F3941D00E98CF2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5C42E9CE2110C850009E76F2 /* Models */,
 				5CF0C43920F3948000E98CF2 /* Login.storyboard */,
 				5C00C252210F60650008A718 /* AddEpisodeViewController.swift */,
 				5CF0C43B20F394B400E98CF2 /* LoginViewController.swift */,
 				5CFD4C2A20FD380D009165AF /* HomeViewController.swift */,
 				5C02F831210E04F20019F593 /* ShowDetailsViewController.swift */,
+				5C42E9CE2110C850009E76F2 /* Models */,
 			);
 			path = Login;
 			sourceTree = "<group>";
