@@ -151,26 +151,37 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="HomeTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="HomeTableViewCell" id="976-oN-xEh" customClass="HomeTableViewCell" customModule="TVShows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" restorationIdentifier="HomeTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="HomeTableViewCell" rowHeight="111" id="976-oN-xEh" customClass="HomeTableViewCell" customModule="TVShows" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="111"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="976-oN-xEh" id="Q2U-RV-UaM">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="976-oN-xEh" id="Q2U-RV-UaM">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="110.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fve-NM-JgV">
-                                                    <rect key="frame" x="122.5" y="11" width="42" height="21"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="41z-Fl-ose">
+                                                    <rect key="frame" x="10" y="0.0" width="70" height="99"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="100" id="W2V-mg-Lhe"/>
+                                                        <constraint firstAttribute="width" constant="70" id="n31-6f-8jn"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fve-NM-JgV">
+                                                    <rect key="frame" x="100" y="11" width="42" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Fve-NM-JgV" firstAttribute="centerY" secondItem="Q2U-RV-UaM" secondAttribute="centerY" id="4J7-K4-nkn"/>
-                                                <constraint firstItem="Fve-NM-JgV" firstAttribute="centerX" secondItem="Q2U-RV-UaM" secondAttribute="centerX" id="95R-5j-IWp"/>
+                                                <constraint firstItem="41z-Fl-ose" firstAttribute="top" secondItem="Q2U-RV-UaM" secondAttribute="top" constant="10" id="2me-Qv-a9Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="41z-Fl-ose" secondAttribute="bottom" constant="10" id="Fei-KP-J3f"/>
+                                                <constraint firstItem="Fve-NM-JgV" firstAttribute="top" secondItem="Q2U-RV-UaM" secondAttribute="topMargin" constant="15" id="IXN-ZU-U7i"/>
+                                                <constraint firstItem="41z-Fl-ose" firstAttribute="leading" secondItem="Q2U-RV-UaM" secondAttribute="leading" constant="10" id="Zys-ms-aRz"/>
+                                                <constraint firstItem="Fve-NM-JgV" firstAttribute="leading" secondItem="41z-Fl-ose" secondAttribute="trailing" constant="20" id="lMh-Iy-o89"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="showImageView" destination="41z-Fl-ose" id="jzU-VP-Y0T"/>
                                             <outlet property="titleLabel" destination="Fve-NM-JgV" id="Jjw-vi-w0s"/>
                                         </connections>
                                     </tableViewCell>
@@ -198,7 +209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJV-vL-jp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992" y="631"/>
+            <point key="canvasLocation" x="991.875" y="630.63380281690138"/>
         </scene>
         <!--Show Details View Controller-->
         <scene sceneID="N1M-TT-nbe">

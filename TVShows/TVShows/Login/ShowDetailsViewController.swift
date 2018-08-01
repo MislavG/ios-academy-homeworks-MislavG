@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
+import Kingfisher
 
 class ShowDetailsViewController: UIViewController {
 
@@ -129,6 +130,8 @@ class ShowDetailsViewController: UIViewController {
                 case .success(let userTemp):
                     self?.showDetails = userTemp
 //                    self?.tableView.reloadData()
+                     let url = URL(string: "https://api.infinum.academy" + userTemp.imageUrl)
+                    self?.showImageView.kf.setImage(with: url)
                     self?.updateView()
                     print("Success: \(userTemp)")
                 case .failure(let error):

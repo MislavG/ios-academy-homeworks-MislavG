@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 struct IndexPathCellItem {
     let cellTitleLabel: String
     let cellColor: UIColor
+    let cellImageURL: URL
 }
 
 class HomeTableViewCell: UITableViewCell {
@@ -19,6 +21,8 @@ class HomeTableViewCell: UITableViewCell {
 //    @IBOutlet private weak var _rightLabel: UILabel!
     
     @IBOutlet private weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var showImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,6 +46,7 @@ class HomeTableViewCell: UITableViewCell {
 //        _leftLabel.text = item.left
 //        _rightLabel.text = item.right
         titleLabel.text = item.cellTitleLabel
+        showImageView.kf.setImage(with: item.cellImageURL)
     }
     
 }

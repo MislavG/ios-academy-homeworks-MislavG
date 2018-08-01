@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
+//import Kingfisher
 
 class HomeViewController: UIViewController {
 
@@ -45,6 +46,12 @@ class HomeViewController: UIViewController {
         }
         loadShows(loginUserData: loginUserHome!)
     }
+//    private func setImages(shows: [Show]) {
+//        for show in shows {
+//            let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
+//            showImageView.kf.setImage(with: url)
+//        }
+//    }
     
     func loadShows(loginUserData: LoginData) {
         _alamofireCodableGetShows(loginUser: loginUserData)
@@ -52,10 +59,6 @@ class HomeViewController: UIViewController {
     
     private func _alamofireCodableGetShows(loginUser: LoginData) {
         SVProgressHUD.show()
-        
-        
-
-        
         
         let headers = ["Authorization": loginUser.token]
         Alamofire
@@ -71,6 +74,7 @@ class HomeViewController: UIViewController {
                 switch dataResponse.result {
                 case .success(let userTemp):
                     self?.listOfShows = userTemp
+//                    self?.setImages(shows: userTemp)
                     self?.tableView.reloadData()
                     print("Success: \(userTemp)")
                 case .failure(let error):
@@ -129,11 +133,19 @@ extension HomeViewController: UITableViewDataSource {
             ) as! HomeTableViewCell
         
         
+        let url = URL(string: "https://api.infinum.academy" + listOfShows[row].imageUrl)
+//        let imageView: UIImageView = UIma
+//            showImageView.kf.setImage(with: url)
+        
         // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
+        
+        
         let item: IndexPathCellItem = IndexPathCellItem(
 //            label: "INDEX PATH - ROW: \(row)",
             cellTitleLabel: listOfShows[row].title,
-            cellColor: row % 2 == 0 ? .gray : .white
+            cellColor: row % 2 == 0 ? .gray : .white,
+            cellImageURL: url!
+//            cellImage: UIImageView.kf.setImage(with: url)
         )
         
         
