@@ -228,6 +228,23 @@ extension ShowDetailsViewController: UITableViewDataSource {
         // Here we are returning our resused and configured cell to be displayed on the screen.
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let episodeDetailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "EpisodeDetailsViewController"
+            ) as! EpisodeDetailsViewController
+        
+        episodeDetailsViewController.loginUserData = self.loginUserData
+        episodeDetailsViewController.episodeID = listOfEpisodes[indexPath.row].id
+        episodeDetailsViewController.loadViewIfNeeded()
+        
+        navigationController?.pushViewController(episodeDetailsViewController, animated:
+            true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+    }
     
 //    func tableView(episodesTableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
 //

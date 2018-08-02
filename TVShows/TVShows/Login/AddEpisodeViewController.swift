@@ -15,7 +15,7 @@ protocol RefreshEpisodeListDelegate: class {
     func refreshEpisodeList()
 }
 
-class AddEpisodeViewController: UIViewController {
+class AddEpisodeViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     weak var delegate: RefreshEpisodeListDelegate?
     
@@ -23,16 +23,91 @@ class AddEpisodeViewController: UIViewController {
     
     var addEpisodeModel : AddEpisode?
     
+    var mediaImage : Media?
+    
     let alertController = UIAlertController(title: "Alert", message: "Alert: Episode not created.", preferredStyle: .alert)
     
     let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
         print("You've pressed cancel");
     }
     
+    var imagePicker = UIImagePickerController()
+    
     @IBOutlet private weak var episodeTitle: UITextField!
     @IBOutlet private weak var episodeSeason: UITextField!
     @IBOutlet private weak var episodeNumber: UITextField!
     @IBOutlet private weak var episodeDescription: UITextField!
+//    @IBOutlet private weak var ULPhotoImageView: UIImageView!
+    @IBOutlet weak var ULPhotoButton: UIButton!
+    
+    @IBAction func ULPhotoButtonPressed(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum;
+            imagePicker.allowsEditing = false
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            //make small-sized image appear in button background
+//            ULPhotoButton.setBackgroundImage(image, for: UIControlState.normal)
+//            ULPhotoButton.setImage(image, for: .normal)
+//            ULPhotoButton.image
+//            ULPhotoButton.imageView?.image = image
+//            ULPhotoButton.imageView?.contentMode = .scaleAspectFit
+//            imageView.image = image
+            uploadPhotoToServer(selectedImage: image, token: (loginUserData?.token)!)
+        }
+        
+        picker.dismiss(animated: true, completion: nil);
+        
+//        ULPhotoButton.setBackgroundImage(image, for: UIControlState.normal)
+    }
+    
+    func uploadPhotoToServer(selectedImage: UIImage, token: String) {
+        let headers = ["Authorization": token]
+        
+        let someUIImage = selectedImage
+        let imageByteData = UIImagePNGRepresentation(someUIImage)!
+        
+        Alamofire
+            .upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(imageByteData,
+                                         withName: "file",
+                                         fileName: "image.png",
+                                         mimeType: "image/png")
+            }, to: "https://api.infinum.academy/api/media",
+               method: .post,
+               headers: headers)
+            { [weak self] result in
+                switch result {
+                case .success(let uploadRequest, _, _):
+                    self?.processUploadRequest(uploadRequest)
+                case .failure(let encodingError):
+                    print(encodingError)
+                } }
+    }
+    
+    func processUploadRequest(_ uploadRequest: UploadRequest) {
+        uploadRequest
+//            .responseJSON { [weak self] dataResponse in
+            .responseDecodableObject(keyPath: "data") { (response:
+                DataResponse<Media>) in
+                switch response.result {
+                case .success(let media):
+                    print("DECODED: \(media)")
+                    print("Proceed to add episode call...")
+                    self.mediaImage = media
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +141,7 @@ class AddEpisodeViewController: UIViewController {
     }
     
     @objc func didSelectAdd () {
-        addEpisodeModel = AddEpisode.init(showId: nil, mediaId: nil, title: episodeTitle.text!, description: episodeDescription.text!, episodeNumber: episodeNumber.text!, season: episodeSeason.text!)
+        addEpisodeModel = AddEpisode.init(showId: nil, mediaId: mediaImage?.mediaId, title: episodeTitle.text!, description: episodeDescription.text!, episodeNumber: episodeNumber.text!, season: episodeSeason.text!)
     
         _alamofireCodableCreateNewEpisode(loginUser: loginUserData!, addEpisode: addEpisodeModel!)
     }

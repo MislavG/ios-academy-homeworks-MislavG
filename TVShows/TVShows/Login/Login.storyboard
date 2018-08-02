@@ -209,7 +209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJV-vL-jp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="991.875" y="630.63380281690138"/>
+            <point key="canvasLocation" x="1020" y="619"/>
         </scene>
         <!--Show Details View Controller-->
         <scene sceneID="N1M-TT-nbe">
@@ -322,15 +322,14 @@
                                     <action selector="addNewButton:" destination="BHf-b8-waU" eventType="touchUpInside" id="EVG-RD-UQs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcW-V7-SKu" userLabel="Back Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcW-V7-SKu" userLabel="Back Button">
                                 <rect key="frame" x="20" y="40" width="30" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="9KH-k3-8JU"/>
                                     <constraint firstAttribute="height" constant="30" id="gxg-kX-gtt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="&lt;">
+                                <state key="normal" image="ic-navigate-back">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -384,13 +383,18 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="wzP-7t-Gto">
                                 <rect key="frame" x="108" y="70" width="104" height="64.5"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-camera" translatesAutoresizingMaskIntoConstraints="NO" id="OBF-CG-NbS">
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvD-hv-iqY" userLabel="Upload Photo Button">
                                         <rect key="frame" x="34.5" y="0.0" width="35" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="Nkc-Js-AFM"/>
-                                            <constraint firstAttribute="height" constant="35" id="aDr-xl-RNW"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="Nqt-0b-W9U"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="zEv-O5-hV9"/>
                                         </constraints>
-                                    </imageView>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" image="ic-camera"/>
+                                        <connections>
+                                            <action selector="ULPhotoButtonPressed:" destination="U8S-qb-Yo9" eventType="touchUpInside" id="iiP-7x-TYt"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE2-VZ-hrb" userLabel="Upload Photo Label">
                                         <rect key="frame" x="0.0" y="44" width="104" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -441,6 +445,7 @@
                         <viewLayoutGuide key="safeArea" id="TyR-2s-JKE"/>
                     </view>
                     <connections>
+                        <outlet property="ULPhotoButton" destination="fvD-hv-iqY" id="F1v-eA-8Bc"/>
                         <outlet property="episodeDescription" destination="PA9-kq-fTQ" id="0z0-iO-BKV"/>
                         <outlet property="episodeNumber" destination="cjq-bd-MWI" id="0Fl-Jd-xkJ"/>
                         <outlet property="episodeSeason" destination="d4Q-N8-98S" id="K5i-ZZ-wPt"/>
@@ -449,7 +454,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="juq-ux-24o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2574.375" y="643.30985915492954"/>
+            <point key="canvasLocation" x="2636" y="187"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mbd-GN-zL7">
@@ -467,10 +472,103 @@
             </objects>
             <point key="canvasLocation" x="-645" y="631"/>
         </scene>
+        <!--Episode Details View Controller-->
+        <scene sceneID="mhl-fE-KS4">
+            <objects>
+                <viewController storyboardIdentifier="EpisodeDetailsViewController" id="pIk-7N-XC8" customClass="EpisodeDetailsViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b74-lv-c56">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Req-jG-clc">
+                                <rect key="frame" x="0.0" y="20" width="320" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="xG3-yP-3ju"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iOu-m1-dY6">
+                                <rect key="frame" x="20" y="325" width="280" height="78.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9iP-6H-nay" userLabel="Episode Title Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="232.5" height="29.5"/>
+                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S01E01" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tve-5K-fLa" userLabel="Episode Number Label">
+                                        <rect key="frame" x="0.0" y="33.5" width="56" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hel-ra-sSv">
+                                        <rect key="frame" x="0.0" y="58" width="133.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="9iP-6H-nay" firstAttribute="top" secondItem="iOu-m1-dY6" secondAttribute="top" id="Anr-R6-8tX"/>
+                                    <constraint firstItem="9iP-6H-nay" firstAttribute="leading" secondItem="iOu-m1-dY6" secondAttribute="leading" id="nFc-Xl-1id"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxg-Uo-KEP" userLabel="Back Button">
+                                <rect key="frame" x="20" y="40" width="30" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Kzy-WL-Pyv"/>
+                                    <constraint firstAttribute="height" constant="30" id="P3c-tm-YPI"/>
+                                </constraints>
+                                <state key="normal" image="ic-navigate-back">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="pIk-7N-XC8" eventType="touchUpInside" id="HPN-b7-VPS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCk-kh-aH7" userLabel="Comments Button">
+                                <rect key="frame" x="20" y="428.5" width="112" height="24"/>
+                                <state key="normal" title="Comments" image="ic-message-circle">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mCk-kh-aH7" firstAttribute="top" secondItem="iOu-m1-dY6" secondAttribute="bottom" constant="25" id="YPU-Hv-6JJ"/>
+                            <constraint firstItem="7pi-Hc-T3E" firstAttribute="trailing" secondItem="Req-jG-clc" secondAttribute="trailing" id="bSe-XR-FXY"/>
+                            <constraint firstItem="iOu-m1-dY6" firstAttribute="leading" secondItem="7pi-Hc-T3E" secondAttribute="leading" constant="20" id="d3Z-rX-Lh1"/>
+                            <constraint firstItem="Req-jG-clc" firstAttribute="leading" secondItem="7pi-Hc-T3E" secondAttribute="leading" id="dXM-1r-M1e"/>
+                            <constraint firstItem="Req-jG-clc" firstAttribute="top" secondItem="7pi-Hc-T3E" secondAttribute="top" id="eCS-6b-NKo"/>
+                            <constraint firstItem="mCk-kh-aH7" firstAttribute="leading" secondItem="7pi-Hc-T3E" secondAttribute="leading" constant="20" id="hOI-Oi-KQ2"/>
+                            <constraint firstItem="Vxg-Uo-KEP" firstAttribute="leading" secondItem="7pi-Hc-T3E" secondAttribute="leading" constant="20" id="j4K-4p-tye"/>
+                            <constraint firstItem="7pi-Hc-T3E" firstAttribute="trailing" secondItem="iOu-m1-dY6" secondAttribute="trailing" constant="20" id="j8K-r0-IaN"/>
+                            <constraint firstItem="Vxg-Uo-KEP" firstAttribute="top" secondItem="7pi-Hc-T3E" secondAttribute="top" constant="20" id="pIx-Hl-FTR"/>
+                            <constraint firstItem="iOu-m1-dY6" firstAttribute="top" secondItem="Req-jG-clc" secondAttribute="bottom" constant="5" id="wf4-bL-zTM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7pi-Hc-T3E"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZlL-X1-7Jx"/>
+                    <connections>
+                        <outlet property="backButton" destination="Vxg-Uo-KEP" id="KsF-hd-Mma"/>
+                        <outlet property="episodeCommentsButton" destination="mCk-kh-aH7" id="Pw5-th-MQ5"/>
+                        <outlet property="episodeDescriptionLabel" destination="Hel-ra-sSv" id="sMg-iE-HTt"/>
+                        <outlet property="episodeImageView" destination="Req-jG-clc" id="kPb-ku-Nnh"/>
+                        <outlet property="episodeNameLabel" destination="9iP-6H-nay" id="Hfp-sT-jhH"/>
+                        <outlet property="episodeNumberLabel" destination="tve-5K-fLa" id="uRN-d7-Ah7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yHn-pe-NQT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1845" y="1346"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ic-camera" width="24" height="24"/>
         <image name="ic-checkbox-empty" width="24" height="24"/>
+        <image name="ic-message-circle" width="24" height="24"/>
+        <image name="ic-navigate-back" width="32" height="32"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>
 </document>
