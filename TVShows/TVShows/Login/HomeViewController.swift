@@ -10,16 +10,17 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
+//import Kingfisher
 
 class HomeViewController: UIViewController {
 
-    var text: String?
+    private var text: String?
     var loginUserHome : LoginData?
     
-    var show : Show?
-    var listOfShows : [Show]?
+    private var show : Show?
+    private var listOfShows: [Show] = []
 
-    private let _numbers = Array(1...1000)
+//    private let _numbers = Array(1...1000)
     
     @IBOutlet weak var infoLabel: UILabel!
         
@@ -34,10 +35,55 @@ class HomeViewController: UIViewController {
 //            infoLabel.text = text
 //        }
 //    }
+//    let logoutItem = UIBarButtonItem.init(image: UIImage(named:
+//        "ic-logout"),
+//                                          style: .plain,
+//                                          target: self,
+//                                          action:
+//        #selector(_logoutActionHandler))
+    
+    @objc private func _logoutActionHandler() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let loginViewController = storyboard.instantiateViewController(
+            withIdentifier: "LoginViewController"
+            ) as! LoginViewController
+        
+        UserDefaults.standard.removeObject(forKey: "loginInfo")
+        
+        navigationController?.setViewControllers([loginViewController],
+                                                 animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Shows"
+        guard loginUserHome != nil
+            else {
+                print("loginUserHome not defined")
+                return
+        }
+//        navigationItem.leftBarButtonItem = logoutItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic-logout"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action:
+            #selector(_logoutActionHandler))
+        
+        loadShows(loginUserData: loginUserHome!)
     }
+
+//    @objc func didSelectLogout () {
+//        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
+//    }
+//    private func setImages(shows: [Show]) {
+//        for show in shows {
+//            let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
+//            showImageView.kf.setImage(with: url)
+//        }
+//    }
     
     func loadShows(loginUserData: LoginData) {
         _alamofireCodableGetShows(loginUser: loginUserData)
@@ -45,13 +91,6 @@ class HomeViewController: UIViewController {
     
     private func _alamofireCodableGetShows(loginUser: LoginData) {
         SVProgressHUD.show()
-        
-        
-//        let parameters: [String: String] = [
-//            "email": email,
-//            "password": password
-//        ]
-        
         
         let headers = ["Authorization": loginUser.token]
         Alamofire
@@ -67,6 +106,7 @@ class HomeViewController: UIViewController {
                 switch dataResponse.result {
                 case .success(let userTemp):
                     self?.listOfShows = userTemp
+//                    self?.setImages(shows: userTemp)
                     self?.tableView.reloadData()
                     print("Success: \(userTemp)")
                 case .failure(let error):
@@ -109,13 +149,13 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //number of rows
-        return listOfShows?.count ?? 0
+        return listOfShows.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let row = indexPath.row
-        let number = _numbers[row]
+//        let number = _numbers[row]
         
         
         // `UITableViewCell` - as you can see, we are reusing ...
@@ -125,11 +165,19 @@ extension HomeViewController: UITableViewDataSource {
             ) as! HomeTableViewCell
         
         
+        let url = URL(string: "https://api.infinum.academy" + listOfShows[row].imageUrl)
+//        let imageView: UIImageView = UIma
+//            showImageView.kf.setImage(with: url)
+        
         // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
+        
+        
         let item: IndexPathCellItem = IndexPathCellItem(
 //            label: "INDEX PATH - ROW: \(row)",
-            label: listOfShows?[row].title ?? "nil",
-            color: row % 2 == 0 ? .blue : .white
+            cellTitleLabel: listOfShows[row].title,
+            cellColor: row % 2 == 0 ? .gray : .white,
+            cellImageURL: url!
+//            cellImage: UIImageView.kf.setImage(with: url)
         )
         
         
@@ -141,10 +189,24 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-//        println(tasks[indexPath.row])
-//        
-//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let showDetailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "ShowDetailsViewController"
+            ) as! ShowDetailsViewController
+        
+        showDetailsViewController.loginUserData = self.loginUserHome
+        showDetailsViewController.showID = listOfShows[indexPath.row].id
+        showDetailsViewController.loadViewIfNeeded()
+        
+        navigationController?.pushViewController(showDetailsViewController, animated:
+            true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+    }
     
 }
 

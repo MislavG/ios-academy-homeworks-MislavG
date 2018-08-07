@@ -16,7 +16,7 @@ protocol ShowUserDelegate: class {
 }
 
 
-class LoginViewController: HomeViewController {
+class LoginViewController: UIViewController {
 
     weak var delegate: ShowUserDelegate?
     
@@ -26,7 +26,12 @@ class LoginViewController: HomeViewController {
     var loginUser : LoginData?
     
     let alertController = UIAlertController(title: "Alert", message: "Alert: Login failed", preferredStyle: .alert)
-    
+    let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+        print("You've pressed cancel");
+    }
+
+    let defaults = UserDefaults.standard
+    let loginInfoKey = "loginInfo"
     
     
     
@@ -47,11 +52,12 @@ class LoginViewController: HomeViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBAction func rememberMeCheckBoxPressed(_ sender: Any) {
-        if (checkBoxState == false) {
+        if !checkBoxState {
             checkBoxState = true
             rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            
         }
-        else if (checkBoxState == true){
+        else if checkBoxState {
             checkBoxState = false
             rememberMeCheckbox.setImage(UIImage(named: "ic-checkbox-empty")?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
@@ -72,6 +78,18 @@ class LoginViewController: HomeViewController {
         
         logInButton.layer.cornerRadius = 7
         
+        self.alertController.addAction(self.action2)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        //check if user has stored credentials
+        if (defaults.object(forKey: loginInfoKey) != nil) {
+            let loginInfo: [String] = defaults.object(forKey: loginInfoKey) as! [String]
+            _loginUserWith(email: loginInfo[0], password: loginInfo[1])
+            
+            checkBoxState = true
+            rememberMeCheckBoxPressed(self)
+        }
+        
         
         //activityIndicator.startAnimating()
         
@@ -82,19 +100,38 @@ class LoginViewController: HomeViewController {
     
     @IBAction func createAccButtonPressed(_ sender: Any) {
         
-//        guard
-//            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
-//                throw MyError.runtimeError("Login fail")
-//        }
-        _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) //ne valja, popravit
-        
+        guard
+            _alamofireCodableRegisterUserWith(email: eMailTextField.text!, password: passwordTextField.text!) != nil else {
+                    print("User registration fail")
+                return
+        }
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
+        guard (eMailTextField.text! != "")
+            else {
+                eMailTextField.shake()
+                eMailTextField.animateColorChangeAdvanced()
+                print("Username is empty")
+                return
+        }
+        guard (passwordTextField.text! != "")
+            else {
+                passwordTextField.shake()
+                passwordTextField.animateColorChangeAdvanced()
+                print("Password is empty")
+                return
+        }
+        
         _loginUserWith(email: eMailTextField.text!, password: passwordTextField.text!)
     }
     
     func onLoginSuccess() {
+        
+        //store in user defaults
+        if checkBoxState {
+            defaults.set([eMailTextField.text, passwordTextField.text], forKey: loginInfoKey)
+        }
         
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
@@ -103,13 +140,11 @@ class LoginViewController: HomeViewController {
             ) as! HomeViewController
         
         homeViewController.loginUserHome = self.loginUser
-        homeViewController.loadShows(loginUserData: loginUser!)
+
         homeViewController.loadViewIfNeeded()
 
-        homeViewController.showUser(info: eMailTextField.text!)
 
-//        navigationController?.pushViewController(homeViewController, animated:
-//            true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setViewControllers([homeViewController], animated:
             true)
     }
@@ -167,9 +202,28 @@ class LoginViewController: HomeViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self?.present((self?.alertController)!, animated: true, completion: nil)
-                    SVProgressHUD.showError(withStatus: "Failure")
+                    self?.present((self?.alertController)!, animated: true, completion: nil )
+//                    SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
     }
+}
+
+extension UIView {
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.duration = 0.6
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
+        layer.add(animation, forKey: "shake")
+    }
+    
+    func animateColorChangeAdvanced() {
+        UIView.animate(
+            withDuration: 0.5, delay: 0.0, options:[.autoreverse, .curveEaseInOut], animations: {
+                self.backgroundColor = UIColor.red.withAlphaComponent(0.1)
+        }, completion: {(finished) in
+            self.backgroundColor = UIColor.white.withAlphaComponent(1)})
+    }
+        
 }
