@@ -36,20 +36,37 @@ class EpisodeDetailsViewController: UIViewController {
         }
     }
     
-    @IBAction func backButtonPressed(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-//        navigationController?.setNavigationBarHidden(false, animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         guard loginUserData != nil
             else {
                 print("loginUserData not defined")
                 return
         }
         loadEpisodeDetails(loginUserData: loginUserData!, episodeID: episodeID!)
+        
+    }
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func commentsButtonPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let commentsViewController = storyboard.instantiateViewController(
+            withIdentifier: "CommentsViewController"
+            ) as! CommentsViewController
 
+        commentsViewController.episodeID = episodeID
+        commentsViewController.loginUserData = loginUserData
+    navigationController?.pushViewController(commentsViewController, animated:
+        true)
     }
     
     private func loadEpisodeDetails(loginUserData: LoginData, episodeID : String) {
@@ -80,7 +97,6 @@ class EpisodeDetailsViewController: UIViewController {
                 switch dataResponse.result {
                 case .success(let userTemp):
                     self?.episodeDetails = userTemp
-                    //                    self?.tableView.reloadData()
                     let url = URL(string: "https://api.infinum.academy" + userTemp.imageUrl)
                     self?.episodeImageView.kf.setImage(with: url)
                     self?.updateView()

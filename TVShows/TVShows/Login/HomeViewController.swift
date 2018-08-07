@@ -10,7 +10,6 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
-//import Kingfisher
 
 class HomeViewController: UIViewController {
 
@@ -19,9 +18,7 @@ class HomeViewController: UIViewController {
     
     private var show : Show?
     private var listOfShows: [Show] = []
-
-//    private let _numbers = Array(1...1000)
-    
+  
     @IBOutlet weak var infoLabel: UILabel!
         
     @IBOutlet private weak var tableView: UITableView! {
@@ -30,17 +27,27 @@ class HomeViewController: UIViewController {
             tableView.delegate = self
         }
     }
-    //        {
-//        didSet {
-//            infoLabel.text = text
-//        }
-//    }
-//    let logoutItem = UIBarButtonItem.init(image: UIImage(named:
-//        "ic-logout"),
-//                                          style: .plain,
-//                                          target: self,
-//                                          action:
-//        #selector(_logoutActionHandler))
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Shows"
+        guard loginUserHome != nil
+            else {
+                print("loginUserHome not defined")
+                return
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic-logout"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action:
+            #selector(_logoutActionHandler))
+        
+        loadShows(loginUserData: loginUserHome!)
+    }
     
     @objc private func _logoutActionHandler() {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
@@ -53,37 +60,9 @@ class HomeViewController: UIViewController {
         
         navigationController?.setViewControllers([loginViewController],
                                                  animated: true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "Shows"
-        guard loginUserHome != nil
-            else {
-                print("loginUserHome not defined")
-                return
-        }
-//        navigationItem.leftBarButtonItem = logoutItem
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic-logout"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action:
-            #selector(_logoutActionHandler))
-        
-        loadShows(loginUserData: loginUserHome!)
-    }
 
-//    @objc func didSelectLogout () {
-//        navigationController?.popViewController(animated: true)
-//        dismiss(animated: true, completion: nil)
-//    }
-//    private func setImages(shows: [Show]) {
-//        for show in shows {
-//            let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
-//            showImageView.kf.setImage(with: url)
-//        }
-//    }
     
     func loadShows(loginUserData: LoginData) {
         _alamofireCodableGetShows(loginUser: loginUserData)
@@ -106,7 +85,6 @@ class HomeViewController: UIViewController {
                 switch dataResponse.result {
                 case .success(let userTemp):
                     self?.listOfShows = userTemp
-//                    self?.setImages(shows: userTemp)
                     self?.tableView.reloadData()
                     print("Success: \(userTemp)")
                 case .failure(let error):
@@ -121,6 +99,7 @@ extension HomeViewController: ShowUserDelegate {
         infoLabel.text = info
     }
 }
+
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -166,12 +145,8 @@ extension HomeViewController: UITableViewDataSource {
         
         
         let url = URL(string: "https://api.infinum.academy" + listOfShows[row].imageUrl)
-//        let imageView: UIImageView = UIma
-//            showImageView.kf.setImage(with: url)
-        
+
         // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
-        
-        
         let item: IndexPathCellItem = IndexPathCellItem(
 //            label: "INDEX PATH - ROW: \(row)",
             cellTitleLabel: listOfShows[row].title,
@@ -183,7 +158,6 @@ extension HomeViewController: UITableViewDataSource {
         
         // Actuall configuration - we could of course just make all UI elements public, but that would be disgusting ;)
         cell.configure(with: item)
-        
         
         // Here we are returning our resused and configured cell to be displayed on the screen.
         return cell
@@ -204,10 +178,7 @@ extension HomeViewController: UITableViewDataSource {
         
         navigationController?.pushViewController(showDetailsViewController, animated:
             true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
     }
-    
 }
 
 extension HomeViewController: UITableViewDelegate {

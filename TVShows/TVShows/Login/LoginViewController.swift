@@ -21,7 +21,6 @@ class LoginViewController: UIViewController {
     weak var delegate: ShowUserDelegate?
     
     var checkBoxState = false
-    
     var user : User?
     var loginUser : LoginData?
     
@@ -42,14 +41,20 @@ class LoginViewController: UIViewController {
     
     
     @IBOutlet weak var rememberMeCheckbox: UIButton!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var logInButton: UIButton!
-    
     @IBOutlet weak var eMailTextField: UITextField!
-    
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        viewStart()
+    }
     
     @IBAction func rememberMeCheckBoxPressed(_ sender: Any) {
         if !checkBoxState {
@@ -63,39 +68,21 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        viewStart()
-    }
-    
-    //ctrl 6
-    //MARK: -Private-
-    
-    private func viewStart() { //on start, animate indicator for 3 seconds and activate button
+ 
+    private func viewStart() {
         
         logInButton.layer.cornerRadius = 7
         
         self.alertController.addAction(self.action2)
-        navigationController?.setNavigationBarHidden(true, animated: true)
         
         //check if user has stored credentials
-        if (defaults.object(forKey: loginInfoKey) != nil) {
+        if defaults.object(forKey: loginInfoKey) != nil {
             let loginInfo: [String] = defaults.object(forKey: loginInfoKey) as! [String]
             _loginUserWith(email: loginInfo[0], password: loginInfo[1])
             
             checkBoxState = true
             rememberMeCheckBoxPressed(self)
         }
-        
-        
-        //activityIndicator.startAnimating()
-        
-        //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
-            //self.activityIndicator.stopAnimating()
-        //}
     }
     
     @IBAction func createAccButtonPressed(_ sender: Any) {
@@ -108,14 +95,14 @@ class LoginViewController: UIViewController {
     }
     @IBAction func logInButtonPressed(_ sender: Any) {
 
-        guard (eMailTextField.text! != "")
+        guard eMailTextField.text! != ""
             else {
                 eMailTextField.shake()
                 eMailTextField.animateColorChangeAdvanced()
                 print("Username is empty")
                 return
         }
-        guard (passwordTextField.text! != "")
+        guard passwordTextField.text! != ""
             else {
                 passwordTextField.shake()
                 passwordTextField.animateColorChangeAdvanced()
@@ -134,17 +121,13 @@ class LoginViewController: UIViewController {
         }
         
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
-        
         let homeViewController = storyboard.instantiateViewController(
             withIdentifier: "HomeViewController"
             ) as! HomeViewController
         
         homeViewController.loginUserHome = self.loginUser
-
         homeViewController.loadViewIfNeeded()
 
-
-        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setViewControllers([homeViewController], animated:
             true)
     }
@@ -152,7 +135,6 @@ class LoginViewController: UIViewController {
     private func _alamofireCodableRegisterUserWith(email: String, password: String) {
         SVProgressHUD.show()
 
-        
         let parameters: [String: String] = [
             "email": email,
             "password": password
@@ -191,7 +173,6 @@ class LoginViewController: UIViewController {
                      parameters: parameters,
                      encoding: JSONEncoding.default)
             .validate()
-//            .responseJSON { [weak self] dataResponse in
             .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (dataResponse: DataResponse<LoginData>) in
         
                 switch dataResponse.result {
@@ -203,7 +184,6 @@ class LoginViewController: UIViewController {
                 case .failure(let error):
                     print("API failure: \(error)")
                     self?.present((self?.alertController)!, animated: true, completion: nil )
-//                    SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
     }

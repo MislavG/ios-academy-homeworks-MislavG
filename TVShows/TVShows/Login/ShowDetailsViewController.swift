@@ -33,7 +33,6 @@ class ShowDetailsViewController: UIViewController {
             addNewButton.layer.shadowRadius = 2.0
             addNewButton.layer.shadowOpacity = 0.5
             addNewButton.layer.cornerRadius = addNewButton.frame.width / 2
-//            addNewButton.addTarget(self, action: "backAction", for: .touchUpInside)
         }
     }
     @IBOutlet private weak var backButton: UIButton!  {
@@ -47,15 +46,30 @@ class ShowDetailsViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        guard loginUserData != nil
+            else {
+                print("loginUserData not defined")
+                return
+        }
+        loadShowDetails(loginUserData: loginUserData!, showID: showID!)
+        loadEpisodes(loginUserData: loginUserData!, showID: showID!)
+    }
+    
     @IBAction func backButtonPressed(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
     
-        
         let addEpisodeViewController = storyboard.instantiateViewController(
             withIdentifier: "AddEpisodeViewController"
             ) as! AddEpisodeViewController
@@ -67,7 +81,6 @@ class ShowDetailsViewController: UIViewController {
             addEpisodeViewController)
         
         addEpisodeViewController.loadViewIfNeeded()
-        
         addEpisodeViewController.delegate = self
         
         present(navigationController, animated: true, completion: nil)
@@ -78,20 +91,6 @@ class ShowDetailsViewController: UIViewController {
             episodesTableView.dataSource = self
             episodesTableView.delegate = self
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
-        guard loginUserData != nil
-            else {
-                print("loginUserData not defined")
-                return
-        }
-        loadShowDetails(loginUserData: loginUserData!, showID: showID!)
-        loadEpisodes(loginUserData: loginUserData!, showID: showID!)
-
     }
  
     private func loadShowDetails(loginUserData: LoginData, showID : String) {
@@ -105,7 +104,6 @@ class ShowDetailsViewController: UIViewController {
     private func updateView() {
         showTitleLabel.text = showDetails?.title
         showDescriptionLabel.text = showDetails?.title
-//        numberOfEpisodesLabel = showDetails.
     }
     
     private func updateEpisodeNumber() {
@@ -130,7 +128,6 @@ class ShowDetailsViewController: UIViewController {
                 switch dataResponse.result {
                 case .success(let userTemp):
                     self?.showDetails = userTemp
-//                    self?.tableView.reloadData()
                      let url = URL(string: "https://api.infinum.academy" + userTemp.imageUrl)
                     self?.showImageView.kf.setImage(with: url)
                     self?.updateView()
@@ -171,26 +168,6 @@ class ShowDetailsViewController: UIViewController {
 extension ShowDetailsViewController: UITableViewDataSource {
     
     func numberOfSections(in episodesTableView: UITableView) -> Int {
-        /*
-         
-         We have one section for testing purpose
-         Usually it is the best to model your data simillar how you want them to
-         show on screen.
-         
-         struct Section {
-         let name: String
-         let items: [Int]
-         }
-         
-         .
-         .
-         .
-         let sections: [Section]
-         
-         return sections.count
-         
-         */
-        
         return 1
     }
     
@@ -202,32 +179,23 @@ extension ShowDetailsViewController: UITableViewDataSource {
     func tableView(_ episodesTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = indexPath.row
-        //        let number = _numbers[row]
-        
-        
-        // `UITableViewCell` - as you can see, we are reusing ...
+
         let cell: DetailsTableViewCell = episodesTableView.dequeueReusableCell(
             withIdentifier: "DetailsTableViewCell",
             for: indexPath
             ) as! DetailsTableViewCell
         
-        
-        // Model data - which we will use for configuration of the view, in our case `UITableViewCell`
         let item: DetailsCellItem = DetailsCellItem(
-            //            label: "INDEX PATH - ROW: \(row)",
             cellSeasonLabel: "S\(listOfEpisodes[row].season) Ep\(listOfEpisodes[row].episodeNumber)",
             cellEpisodeLabel: listOfEpisodes[row].title,
             cellColor: row % 2 == 0 ? .gray : .white
         )
         
-        
-        // Actuall configuration - we could of course just make all UI elements public, but that would be disgusting ;)
         cell.configure(with: item)
         
-        
-        // Here we are returning our resused and configured cell to be displayed on the screen.
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
@@ -242,38 +210,11 @@ extension ShowDetailsViewController: UITableViewDataSource {
         
         navigationController?.pushViewController(episodeDetailsViewController, animated:
             true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
     }
-    
-//    func tableView(episodesTableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-//
-//        let storyboard = UIStoryboard(name: "Login", bundle: nil)
-//
-//        let showDetailsViewController = storyboard.instantiateViewController(
-//            withIdentifier: "ShowDetailsViewController"
-//            ) as! ShowDetailsViewController
-//
-//        showDetailsViewController.loginUserData = self.loginUserHome
-//        showDetailsViewController.showID = listOfShows[indexPath.row].id
-//        showDetailsViewController.loadViewIfNeeded()
-//
-//        navigationController?.setViewControllers([showDetailsViewController], animated:
-//            true)
-//
-//    }
-    
 }
 
 extension ShowDetailsViewController: UITableViewDelegate {
     
-    /*
-     Now, we are using autosizing via autolayout, if you want custom size override this function.
-     And also, check other methods from `UITableViewDelegate`
-     */
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return 90
-    //    }
 }
 
 extension ShowDetailsViewController: RefreshEpisodeListDelegate {
