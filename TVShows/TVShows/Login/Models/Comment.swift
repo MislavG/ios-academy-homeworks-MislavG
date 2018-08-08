@@ -13,13 +13,13 @@ import Foundation
 struct Comment: Codable { /* typealias Codable = Encodable & Decodable */
     let text: String
     let episodeId: String
-    let userMail: String
+    let userEmail: String
     let id: String
     
     enum CodingKeys: String, CodingKey {
         case text
         case episodeId
-        case userMail
+        case userEmail
         case id = "_id"
     }
 }

@@ -33,6 +33,7 @@ class CommentsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false,  animated: true)
     }
     
@@ -184,7 +185,7 @@ extension CommentsViewController: UITableViewDataSource {
     
  
         let item: CommentsCellItem = CommentsCellItem(
-            cellUsername: episodeComments[row].userMail,
+            cellUsername: episodeComments[row].userEmail,
             cellColor: row % 2 == 0 ? .gray : .white,
             cellImage: UIImage.init(named: "img-placeholder-user1")!, //FIX
             cellComment: episodeComments[row].text
