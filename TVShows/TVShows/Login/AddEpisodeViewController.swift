@@ -23,6 +23,7 @@ class AddEpisodeViewController: UIViewController, UINavigationControllerDelegate
     
     var addEpisodeModel : AddEpisode?
     
+    var showId: String!
     var mediaImage : Media?
     
     
@@ -126,7 +127,7 @@ class AddEpisodeViewController: UIViewController, UINavigationControllerDelegate
     }
     
     @objc func didSelectAdd () {
-        addEpisodeModel = AddEpisode.init(showId: nil, mediaId: mediaImage?.mediaId, title: episodeTitle.text!, description: episodeDescription.text!, episodeNumber: episodeNumber.text!, season: episodeSeason.text!)
+        addEpisodeModel = AddEpisode.init(showId: showId, mediaId: mediaImage?.mediaId, title: episodeTitle.text!, description: episodeDescription.text!, episodeNumber: episodeNumber.text!, season: episodeSeason.text!)
     
         _alamofireCodableCreateNewEpisode(loginUser: loginUserData!, addEpisode: addEpisodeModel!)
     }
@@ -151,7 +152,7 @@ class AddEpisodeViewController: UIViewController, UINavigationControllerDelegate
         SVProgressHUD.show()
         
                 let parameters: [String: String] = [
-                    "showId": "KnhNCJGvczXiGLIC"/*addEpisode.showId!*/,
+                    "showId": addEpisode.showId!,
                     "mediaId": "KnhNCJGvczLiGDIC"/*addEpisode.mediaId!*/,
 //                    "showId": addEpisode.showId!,
 //                    "mediaId": addEpisode.mediaId!,

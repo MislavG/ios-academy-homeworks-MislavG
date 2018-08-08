@@ -76,7 +76,7 @@ class ShowDetailsViewController: UIViewController {
         
         
         addEpisodeViewController.loginUserData = self.loginUserData
-        
+        addEpisodeViewController.showId = showID!
         let navigationController = UINavigationController.init(rootViewController:
             addEpisodeViewController)
         
